@@ -1,6 +1,0 @@
-opencv-python
-numpy
-mss
-keyboard
-dxcam
-vgamepad
