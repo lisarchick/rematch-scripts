@@ -1,5 +1,23 @@
 [
  {
+  "id": "minimap-zoom-mvikf5nr",
+  "title": "minimap-zoom",
+  "author": "lisarchick",
+  "description": "zoom your minimap",
+  "instructions": "1. скачайте скрипт\n2. скачайте все нужные библиотеки  \n3. настройте какой зум нужен для вас",
+  "version": 1792614553535,
+  "entry": "",
+  "settings": [],
+  "images": [],
+  "files": [
+   {
+    "name": "rematch_minimap_zoom.py",
+    "size": 9948
+   }
+  ],
+  "updated": 1792614553535
+ },
+ {
   "id": "ball-lock-pack",
   "title": "Rematch Ball Lock Pack",
   "author": "rematch-scripts",
