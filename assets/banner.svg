@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="320" viewBox="0 0 1280 320">
+<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#14111f"/><stop offset="1" stop-color="#0f1117"/></linearGradient>
+<radialGradient id="glow" cx=".8" cy=".2" r=".7"><stop offset="0" stop-color="#7c5cff" stop-opacity=".45"/><stop offset="1" stop-color="#7c5cff" stop-opacity="0"/></radialGradient></defs>
+<rect width="1280" height="320" fill="url(#g)"/><rect width="1280" height="320" fill="url(#glow)"/>
+<g transform="translate(150 160)" fill="none" stroke="#7c5cff" stroke-width="14"><circle r="70"/><circle r="22" fill="#7c5cff" stroke="none"/>
+<path d="M0-100v40M0 60v40M-100 0h40M60 0h40" stroke-linecap="round"/></g>
+<text x="290" y="160" fill="#e6e8f0" font-family="Segoe UI,Arial,sans-serif" font-size="76" font-weight="700">Rematch Scripts</text>
+<text x="294" y="212" fill="#8b92a8" font-family="Segoe UI,Arial,sans-serif" font-size="30">Community script library · Библиотека скриптов сообщества</text>
+</svg>

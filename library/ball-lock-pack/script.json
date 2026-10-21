@@ -1,0 +1,195 @@
+{
+  "title": "Rematch Ball Lock Pack",
+  "author": "rematch-scripts",
+  "version": 2,
+  "description": "Автонаведение камеры на мяч по цвету. Включается тумблером в меню, режим (мышь или геймпад) и параметры настраиваются там же.",
+  "instructions": "1. Нажми **Добавить в меню**.\n2. Открой вкладку **Меню**, включи тумблер у скрипта. При первом запуске приложение само поставит нужные библиотеки Python (нужен установленный Python 3.10+).\n3. Выбери режим и настрой параметры (шестерёнка). Изменения применяются сразу.\n4. Для геймпада один раз поставь драйвер ViGEmBus.\n5. Игра должна быть в режиме «Окно без рамки».\n\nЕсли лагает: увеличь **Уменьшение кадра** или уменьши **Частоту**.",
+  "entry": "ball_lock.py",
+  "settings": [
+    {
+      "key": "mode",
+      "type": "select",
+      "label": {
+        "ru": "Режим",
+        "en": "Mode"
+      },
+      "default": "mouse",
+      "restart": true,
+      "options": [
+        {
+          "value": "mouse",
+          "label": {
+            "ru": "Мышь и клавиатура",
+            "en": "Mouse & keyboard"
+          }
+        },
+        {
+          "value": "gamepad",
+          "label": {
+            "ru": "Геймпад (правый стик)",
+            "en": "Gamepad (right stick)"
+          }
+        }
+      ]
+    },
+    {
+      "key": "sens",
+      "type": "number",
+      "label": {
+        "ru": "Чувствительность",
+        "en": "Sensitivity"
+      },
+      "min": 0.2,
+      "max": 3,
+      "step": 0.05,
+      "default": 1
+    },
+    {
+      "key": "damping",
+      "type": "number",
+      "label": {
+        "ru": "Демпфирование",
+        "en": "Damping"
+      },
+      "min": 0,
+      "max": 3,
+      "step": 0.05,
+      "default": 1
+    },
+    {
+      "key": "deadzone",
+      "type": "number",
+      "label": {
+        "ru": "Мёртвая зона (px)",
+        "en": "Dead zone (px)"
+      },
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "key": "smooth",
+      "type": "number",
+      "label": {
+        "ru": "Сглаживание цели",
+        "en": "Target smoothing"
+      },
+      "min": 0.1,
+      "max": 1,
+      "step": 0.05,
+      "default": 0.7
+    },
+    {
+      "key": "fps",
+      "type": "number",
+      "label": {
+        "ru": "Частота (FPS)",
+        "en": "Rate (FPS)"
+      },
+      "min": 30,
+      "max": 240,
+      "step": 10,
+      "default": 120
+    },
+    {
+      "key": "step",
+      "type": "number",
+      "label": {
+        "ru": "Уменьшение кадра",
+        "en": "Frame downscale"
+      },
+      "min": 1,
+      "max": 6,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "key": "h_min",
+      "type": "number",
+      "label": {
+        "ru": "Цвет мяча: H мин",
+        "en": "Ball colour: H min"
+      },
+      "min": 0,
+      "max": 179,
+      "step": 1,
+      "default": 20,
+      "group": "color"
+    },
+    {
+      "key": "h_max",
+      "type": "number",
+      "label": {
+        "ru": "Цвет мяча: H макс",
+        "en": "Ball colour: H max"
+      },
+      "min": 0,
+      "max": 179,
+      "step": 1,
+      "default": 35,
+      "group": "color"
+    },
+    {
+      "key": "s_min",
+      "type": "number",
+      "label": {
+        "ru": "Цвет мяча: S мин",
+        "en": "Ball colour: S min"
+      },
+      "min": 0,
+      "max": 255,
+      "step": 1,
+      "default": 100,
+      "group": "color"
+    },
+    {
+      "key": "s_max",
+      "type": "number",
+      "label": {
+        "ru": "Цвет мяча: S макс",
+        "en": "Ball colour: S max"
+      },
+      "min": 0,
+      "max": 255,
+      "step": 1,
+      "default": 255,
+      "group": "color"
+    },
+    {
+      "key": "v_min",
+      "type": "number",
+      "label": {
+        "ru": "Цвет мяча: V мин",
+        "en": "Ball colour: V min"
+      },
+      "min": 0,
+      "max": 255,
+      "step": 1,
+      "default": 100,
+      "group": "color"
+    },
+    {
+      "key": "v_max",
+      "type": "number",
+      "label": {
+        "ru": "Цвет мяча: V макс",
+        "en": "Ball colour: V max"
+      },
+      "min": 0,
+      "max": 255,
+      "step": 1,
+      "default": 255,
+      "group": "color"
+    },
+    {
+      "key": "debug",
+      "type": "bool",
+      "label": {
+        "ru": "Окно калибровки",
+        "en": "Calibration window"
+      },
+      "default": false
+    }
+  ]
+}
