@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' https://raw.githubusercontent.com data:; style-src 'self' 'unsafe-inline'; script-src 'self'">
+<title>Rematch Scripts</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<aside>
+  <div class="brand"><span class="logo"></span><b>Rematch</b> Scripts</div>
+  <button class="nav active" data-view="all" data-i="nav_all"></button>
+  <button class="nav" data-view="menu" data-i="nav_menu"></button>
+  <button class="nav hidden" id="nav-upload" data-view="upload" data-i="nav_upload"></button>
+  <div class="spacer"></div>
+  <button class="ghost wide" id="open-overlay" data-i="ov_open"></button>
+  <button class="nav" data-view="settings" data-i="nav_settings"></button>
+</aside>
+<main>
+  <section id="view-all">
+    <div class="bar"><h1 data-i="nav_all"></h1><input id="search" data-ip="search"><button id="refresh" class="ghost" data-i="refresh"></button></div>
+    <div id="notice" class="notice hidden"></div>
+    <div id="grid" class="grid"></div>
+  </section>
+
+  <section id="view-detail" class="hidden">
+    <button id="back" class="ghost" data-i="back"></button>
+    <div id="detail"></div>
+  </section>
+
+  <section id="view-menu" class="hidden">
+    <h1 data-i="menu_title"></h1>
+    <p class="muted" data-i="menu_sub"></p>
+    <div id="menu"></div>
+  </section>
+
+  <section id="view-upload" class="hidden">
+    <h1 data-i="up_title"></h1>
+    <p class="muted" data-i="up_sub"></p>
+    <form id="form">
+      <label><span data-i="f_title"></span><input id="f-title" maxlength="100" required></label>
+      <label><span data-i="f_desc"></span><textarea id="f-desc" rows="3" maxlength="2000"></textarea></label>
+      <label><span data-i="f_instr"></span><textarea id="f-instr" rows="6" maxlength="10000"></textarea></label>
+      <label><span data-i="f_entry"></span><input id="f-entry" placeholder="ball_lock.py"></label>
+      <label><span data-i="f_settings"></span><textarea id="f-settings" rows="5" placeholder='[{"key":"speed","type":"number","label":{"ru":"Скорость","en":"Speed"},"min":1,"max":10,"step":1,"default":5}]'></textarea></label>
+      <div class="two">
+        <div><div class="lbl" data-i="f_photos"></div><div class="drop" id="drop-img"><span data-i="drop_img"></span> <a id="pick-img" data-i="choose"></a></div><div id="list-img" class="chips"></div></div>
+        <div><div class="lbl" data-i="f_files"></div><div class="drop" id="drop-files"><span data-i="drop_files"></span> <a id="pick-files" data-i="choose"></a></div><div id="list-files" class="chips"></div></div>
+      </div>
+      <div class="row"><button class="primary" id="submit" type="submit" data-i="submit"></button><span id="submit-msg" class="muted"></span></div>
+    </form>
+  </section>
+
+  <section id="view-settings" class="hidden">
+    <h1 data-i="nav_settings"></h1>
+    <label><span data-i="lang"></span><select id="lang"><option value="ru">Русский</option><option value="en">English</option></select></label>
+    <label><span data-i="ov_label"></span><input id="ov-key" readonly></label>
+    <p class="muted small" data-i="ov_help"></p>
+    <hr>
+    <p class="muted" data-i="tok_help"></p>
+    <label><span data-i="tok_label"></span><input id="token" type="password" placeholder="ghp_…"></label>
+    <div class="row"><button class="primary" id="save-token" data-i="save"></button><button class="ghost" id="make-token" data-i="make_token"></button><span id="token-msg" class="muted"></span></div>
+    <p class="muted small" id="repo-info"></p>
+  </section>
+</main>
+<div id="lightbox" class="hidden"><img></div>
+<script src="i18n.js"></script>
+<script src="menu.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

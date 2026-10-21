@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Rematch Scripts — Guide</title>
+<style>
+:root{--bg:#0f1117;--panel:#151821;--card:#1a1e2a;--line:#262b3a;--text:#e6e8f0;--muted:#8b92a8;--accent:#7c5cff;--accent2:#9b83ff;--ok:#3ddc97;--warn:#ffb454}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.65 "Segoe UI",system-ui,sans-serif}
+header{position:sticky;top:0;z-index:5;background:rgba(15,17,23,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.top{max-width:980px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;gap:14px}
+.brand{font-weight:600;flex:1;display:flex;align-items:center;gap:10px}
+.logo{width:22px;height:22px;border-radius:50%;border:4px solid var(--accent);box-shadow:inset 0 0 0 4px var(--bg),inset 0 0 0 20px var(--accent)}
+.lang button{background:var(--card);color:var(--muted);border:1px solid var(--line);padding:6px 14px;cursor:pointer;font:inherit}
+.lang button:first-child{border-radius:8px 0 0 8px}.lang button:last-child{border-radius:0 8px 8px 0;border-left:0}
+.lang button.on{background:var(--accent);border-color:var(--accent);color:#fff}
+.wrap{max-width:980px;margin:0 auto;padding:30px 20px 80px}
+.hero{padding:30px 0 10px}
+.hero h1{font-size:38px;margin:0 0 8px}
+.hero p{color:var(--muted);font-size:18px;margin:0}
+nav.toc{display:flex;flex-wrap:wrap;gap:8px;margin:22px 0 6px}
+nav.toc a{background:var(--card);border:1px solid var(--line);color:var(--text);text-decoration:none;padding:6px 14px;border-radius:20px;font-size:14px}
+nav.toc a:hover{border-color:var(--accent)}
+h2{font-size:26px;margin:52px 0 6px;padding-top:6px}
+h2 .tag{display:inline-block;background:var(--accent);color:#fff;font-size:12px;padding:2px 10px;border-radius:20px;vertical-align:middle;margin-left:8px}
+.lead{color:var(--muted);margin:0 0 18px}
+.steps{counter-reset:s;list-style:none;padding:0;margin:0}
+.steps>li{counter-increment:s;position:relative;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px 16px 62px;margin:12px 0}
+.steps>li::before{content:counter(s);position:absolute;left:16px;top:16px;width:32px;height:32px;border-radius:50%;background:var(--accent);color:#fff;font-weight:700;display:flex;align-items:center;justify-content:center}
+.steps b.t{display:block;font-size:17px;margin-bottom:2px}
+.steps p{margin:4px 0;color:#c9cde0}
+.steps ul{margin:6px 0;padding-left:20px;color:#c9cde0}
+code{background:#0b0d13;border:1px solid var(--line);padding:1px 6px;border-radius:5px;font-family:Consolas,monospace;font-size:.9em}
+pre{background:#0b0d13;border:1px solid var(--line);border-radius:10px;padding:12px 14px;overflow:auto;margin:8px 0}
+pre code{border:0;padding:0}
+.note,.warn{border-radius:10px;padding:12px 16px;margin:14px 0;border:1px solid}
+.note{background:rgba(124,92,255,.09);border-color:rgba(124,92,255,.4)}
+.warn{background:rgba(255,180,84,.08);border-color:rgba(255,180,84,.45)}
+.note b,.warn b{display:block;margin-bottom:2px}
+table{width:100%;border-collapse:collapse;margin:12px 0;background:var(--card);border-radius:10px;overflow:hidden}
+td,th{padding:10px 14px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{color:var(--muted);font-weight:600;font-size:13px;text-transform:uppercase;letter-spacing:.04em}
+tr:last-child td{border:0}
+.tree{font-family:Consolas,monospace;font-size:14px}
+a{color:var(--accent2)}
+footer{color:var(--muted);text-align:center;padding:30px;font-size:13px}
+[data-l]{display:none}
+body.ru [data-l=ru],body.en [data-l=en]{display:block}
+body.ru span[data-l=ru],body.en span[data-l=en],body.ru a[data-l=ru],body.en a[data-l=en]{display:inline}
+body.ru li[data-l=ru],body.en li[data-l=en]{display:block}
+@media(max-width:640px){.hero h1{font-size:28px}.steps>li{padding-left:54px}}
+</style>
+</head>
+<body class="ru">
+<header><div class="top"><div class="brand"><span class="logo"></span>Rematch Scripts</div>
+<div class="lang"><button data-set="ru" class="on">Русский</button><button data-set="en">English</button></div></div></header>
+
+<div class="wrap">
+
+<div data-l="ru">
+<div class="hero"><h1>Генеральная инструкция</h1><p>Что залить на GitHub, как открыть приложение, как работает меню с оверлеем и что нужно скачать.</p></div>
+<nav class="toc"><a href="#r0">Как всё устроено</a><a href="#r1">1. GitHub</a><a href="#r2">2. Сборка .exe</a><a href="#r3">3. Открыть приложение</a><a href="#r4">4. Меню и оверлей</a><a href="#r5">5. Твоя загрузка</a><a href="#r6">6. Вопросы</a><a href="#r7">7. Проблемы</a></nav>
+
+<h2 id="r0">Как всё устроено</h2>
+<p class="lead">Своего сервера нет и покупать ничего не надо. Библиотека лежит в твоём репозитории на GitHub, приложение читает её оттуда.</p>
+<table><tr><th>Что</th><th>Кому нужно</th><th>Зачем</th></tr>
+<tr><td><b>Rematch Scripts.exe</b></td><td>всем</td><td>само приложение (каталог, меню, оверлей)</td></tr>
+<tr><td><b>Python 3.10+</b> (python.org, галочка <i>Add python.exe to PATH</i>)</td><td>всем, кто запускает скрипты</td><td>скрипты написаны на Python. Ставится один раз</td></tr>
+<tr><td>Библиотеки Python (opencv, mss и др.)</td><td>—</td><td><b>ставятся сами</b> при первом включении скрипта</td></tr>
+<tr><td>Драйвер <a href="https://github.com/nefarius/ViGEmBus/releases" target="_blank">ViGEmBus</a></td><td>только для режима «Геймпад»</td><td>виртуальный геймпад. Ставится один раз</td></tr>
+<tr><td>GitHub-токен</td><td>только тебе (владельцу)</td><td>чтобы загружать скрипты. Остальным не нужен</td></tr></table>
+<div class="note"><b>Загружать скрипты можешь только ты</b>Кнопка «Загрузить свой» появляется в приложении только если токен принадлежит владельцу репозитория. У всех остальных её нет, а изменить репозиторий они не могут.</div>
+
+<h2 id="r1">1. Заливаем проект на GitHub <span class="tag">один раз</span></h2>
+<ul class="steps">
+<li><b class="t">Создай репозиторий</b><p>Открой <a href="https://github.com/new" target="_blank">github.com/new</a>. Имя <code>rematch-scripts</code>, тип <b>Public</b>, нажми <b>Create repository</b>.</p></li>
+<li><b class="t">Загрузи файлы</b><p>Распакуй <code>rematch-scripts.zip</code>. На странице репозитория нажми <b>uploading an existing file</b>, нажми Ctrl+A в папке проекта и перетащи всё в окно браузера (важно, чтобы загрузилась и скрытая папка <code>.github</code>; если её не видно, включи в Проводнике «Показать скрытые элементы»). Внизу <b>Commit changes</b>. Если GitHub ругается на количество файлов, залей в два приёма.</p></li>
+<li><b class="t">Впиши свой ник</b><p>Открой <code>config.json</code> → карандаш → замени <code>YOUR_GITHUB_USERNAME</code> на свой ник → <b>Commit changes</b>. То же в <code>README.md</code> (там ник в плашке скачивания).</p></li>
+<li><b class="t">Разреши автоматике писать</b><p><b>Settings → Actions → General → Workflow permissions → Read and write permissions → Save</b>. Без этого список скриптов не обновится.</p></li>
+<li><b class="t">Первый запуск списка скриптов</b><p>Вкладка <b>Actions</b> → слева <b>Build library index</b> → <b>Run workflow</b>. Если такого запуска нет, внеси любую правку в папку <code>library</code> (например, залей скрипт через приложение, см. раздел 5). Должен появиться файл <code>library/index.json</code>.</p></li>
+<li><b class="t">Оформи страницу</b><p>Справа шестерёнка у <b>About</b>: описание и темы. <b>Settings → General → Social preview</b>: загрузи <code>assets/social-preview.png</code>.</p>
+<div class="warn"><b>Не включай «Require a pull request before merging»</b>Загрузка из приложения записывает скрипт прямо в ветку <code>main</code>. Такое правило заблокирует тебя самого. Чужие люди и так не могут изменить твой репозиторий, они не участники.</div></li>
+</ul>
+
+<h2 id="r2">2. Собираем приложение (.exe)</h2>
+<ul class="steps">
+<li><b class="t">Запусти сборку</b><p><b>Actions → Build Windows app → Run workflow</b>. Через 3–5 минут появится зелёная галочка.</p></li>
+<li><b class="t">Выпусти релиз</b><p>Справа на главной странице репозитория <b>Releases → Create a new release</b> → в <i>Choose a tag</i> впиши <code>v1.0.0</code> → <b>Create new tag</b> → <b>Publish release</b>. Через несколько минут к релизу прикрепятся два файла:</p>
+<table><tr><th>Файл</th><th>Что это</th></tr>
+<tr><td><code>Rematch Scripts Setup 1.0.0.exe</code></td><td>установщик, делает ярлык в меню «Пуск»</td></tr>
+<tr><td><code>Rematch Scripts 1.0.0.exe</code></td><td>portable: запускается сразу, без установки</td></tr></table></li>
+<li><b class="t">Своя иконка</b><p>Заменить файлы <code>build/icon.png</code> (1024×1024) и <code>build/icon.ico</code> в репозитории, затем выпустить новый релиз (<code>v1.0.1</code>).</p></li>
+</ul>
+
+<h2 id="r3">3. Как открыть приложение</h2>
+<ul class="steps">
+<li><b class="t">Скачай и запусти</b><p>Репозиторий → <b>Releases</b> → скачай <code>.exe</code> → запусти. Этой же ссылкой делись с друзьями.</p>
+<div class="note"><b>Windows SmartScreen</b>Приложение не подписано платным сертификатом. Если Windows пишет «Система защитила ваш компьютер», нажми <b>Подробнее → Выполнить в любом случае</b>.</div></li>
+<li><b class="t">Поставь Python</b><p>Если ещё нет: <a href="https://www.python.org/downloads/" target="_blank">python.org/downloads</a> → установщик → галочка <b>Add python.exe to PATH</b> → Install. Приложение само подскажет, если Python не найден.</p></li>
+<li><b class="t">Язык</b><p><b>Настройки → Язык интерфейса</b> (Русский / English). Переводятся только надписи приложения, тексты скриптов остаются как их написал автор.</p></li>
+</ul>
+
+<h2 id="r4">4. Как работают меню и оверлей</h2>
+<ul class="steps">
+<li><b class="t">Скачать скрипт</b><p><b>Все скрипты</b> → открой нужный → <b>Скачать и добавить в меню</b>. Одна кнопка: приложение скачивает файлы и ставит скрипт в меню. Сейчас в библиотеке есть <b>Rematch Ball Lock Pack</b> (наведение на мяч).</p></li>
+<li><b class="t">Включить</b><p>Вкладка <b>Меню скриптов</b>: у каждого скрипта тумблер. При первом включении приложение само докачает библиотеки Python (это занимает до минуты, статус «Установка библиотек…»). Потом статус станет «Работает» с зелёным индикатором.</p></li>
+<li><b class="t">Настроить</b><p>Шестерёнка открывает настройки скрипта: ползунки, переключатели, списки. Изменения применяются сразу (если нужен перезапуск скрипта, приложение сделает это само). Для каждого скрипта можно задать <b>свою клавишу вкл/выкл</b>: нажми в поле и нужное сочетание. «Сбросить настройки» вернёт стандартные значения.</p></li>
+<li><b class="t">Оверлей поверх игры</b><p>По умолчанию открывается и закрывается клавишей <b>F10</b> (меняется в <b>Настройках</b>). Это то же меню, но маленьким окном справа поверх игры: можно включать скрипты и крутить настройки, не сворачивая игру. Закрыть: <b>Esc</b>, крестик или та же клавиша. Приложение должно быть запущено (можно свернуть).</p></li>
+</ul>
+<div class="warn"><b>Игра в режиме «Окно без рамки»</b>Оверлей и захват экрана работают, когда Rematch запущен в <b>Borderless / Окно без рамки</b>. В «чистом» полноэкранном режиме окна поверх игры и захват экрана могут не работать.</div>
+
+<h2 id="r5">5. Как ты загружаешь новые скрипты <span class="tag">только владелец</span></h2>
+<ul class="steps">
+<li><b class="t">Один раз: токен</b><p>В приложении <b>Настройки → Создать токен на GitHub</b> → внизу страницы <b>Generate token</b> → скопируй токен (<code>ghp_…</code>) → вставь в поле → <b>Сохранить</b>. Появится вкладка <b>Загрузить свой</b>. Токен = пароль, никому не показывай, хранится зашифрованно.</p></li>
+<li><b class="t">Заполни форму</b><p>Название, описание, инструкция, фото, файлы (zip и любые другие). Нажми <b>Опубликовать</b>: скрипт сразу записывается в репозиторий и появляется у всех (через минуту, нажми «Обновить»).</p></li>
+<li><b class="t">Чтобы скрипт был в меню с тумблером и настройками</b><p>Заполни два дополнительных поля:</p>
+<ul><li><b>Файл запуска</b>: имя главного <code>.py</code> файла среди загруженных (например <code>my_script.py</code>).</li>
+<li><b>Настройки (JSON)</b>: список параметров, которые появятся в меню. Пример:</li></ul>
+<pre><code>[
+ {"key":"speed","type":"number","label":{"ru":"Скорость","en":"Speed"},"min":1,"max":10,"step":1,"default":5},
+ {"key":"debug","type":"bool","label":{"ru":"Отладка","en":"Debug"},"default":false},
+ {"key":"mode","type":"select","label":{"ru":"Режим","en":"Mode"},"default":"a","restart":true,
+  "options":[{"value":"a","label":{"ru":"А","en":"A"}},{"value":"b","label":{"ru":"Б","en":"B"}}]}
+]</code></pre>
+<p>Типы: <code>number</code> (ползунок), <code>bool</code> (переключатель), <code>select</code> (список). <code>"restart": true</code> значит, что скрипт перезапускается при изменении.</p>
+<p><b>Как скрипт получает настройки:</b> приложение запускает его с переменной среды <code>REMATCH_CONFIG</code>, это путь к JSON-файлу вида <code>{"speed":5,"debug":false}</code>. Файл обновляется при каждом изменении в меню, скрипт может перечитывать его раз в полсекунды. Готовый пример: <code>library/ball-lock-pack/files/balllock_core.py</code>.</p></li>
+<li><b class="t">Обновить скрипт</b><p>Просто загрузи новую версию. У пользователей в каталоге появится метка «Есть обновление», кнопка <b>Обновить в меню</b> сохранит их настройки.</p></li>
+<li><b class="t">Удалить скрипт</b><p>На GitHub: папка <code>library/</code> → папка скрипта → три точки → <b>Delete directory</b> → Commit. Список обновится сам.</p></li>
+</ul>
+
+<h2 id="r6">6. Частые вопросы</h2>
+<table><tr><th>Вопрос</th><th>Ответ</th></tr>
+<tr><td>Надо ли перезапускать игру?</td><td><b>Нет.</b> Приложение работает отдельно от игры. Включай и выключай скрипты и открывай оверлей в любой момент, игру перезапускать не нужно.</td></tr>
+<tr><td>Надо ли что-то скачивать отдельно?</td><td>Только <b>Python</b> (один раз) и, для геймпада, драйвер <b>ViGEmBus</b>. Всё остальное приложение ставит само.</td></tr>
+<tr><td>Нужен ли у друзей аккаунт GitHub?</td><td>Нет. Скачивать приложение и скрипты можно без аккаунта.</td></tr>
+<tr><td>Скрипты работают, пока приложение открыто?</td><td>Да. Закроешь приложение, скрипты остановятся. Включённые скрипты запустятся снова при следующем открытии.</td></tr>
+<tr><td>Не заблокирует ли игра скрипты?</td><td>Скрипты читают картинку экрана и эмулируют мышь или геймпад. В онлайн-играх такие вещи могут нарушать правила и приводить к бану, используй на свой риск.</td></tr></table>
+
+<h2 id="r7">7. Если что-то не работает</h2>
+<table><tr><th>Проблема</th><th>Решение</th></tr>
+<tr><td>«Приложение не привязано к репозиторию»</td><td>Не вписан ник в <code>config.json</code>. Поправь и выпусти новый релиз.</td></tr>
+<tr><td>«Не удалось загрузить библиотеку (404)»</td><td>Репозиторий должен быть Public и называться как в <code>config.json</code>; должен существовать <code>library/index.json</code> (см. шаг 5 раздела 1).</td></tr>
+<tr><td>Статус «Нужен Python»</td><td>Установи Python 3.10+ с галочкой Add to PATH, перезапусти приложение.</td></tr>
+<tr><td>Статус «Ошибка»</td><td>Открой шестерёнку → <b>Журнал</b>. Там видно причину (не поставилась библиотека, не найден драйвер и т.д.).</td></tr>
+<tr><td>Режим «Геймпад» не работает</td><td>Установи ViGEmBus и перезагрузи компьютер.</td></tr>
+<tr><td>Оверлей не открывается клавишей</td><td>Клавиша занята другой программой. Выбери другую в Настройках.</td></tr>
+<tr><td>Скрипты лагают</td><td>В настройках Ball Lock увеличь «Уменьшение кадра» (3 → 4) или уменьши «Частоту».</td></tr>
+<tr><td>Ошибка GitHub 401/403 при загрузке</td><td>Токен неверный или просрочен. Создай новый с правом <code>public_repo</code>.</td></tr>
+<tr><td>Не собирается .exe</td><td>Actions → красный запуск → лог. Чаще всего не загружена папка <code>.github</code> или <code>build</code>.</td></tr></table>
+</div>
+
+<div data-l="en">
+<div class="hero"><h1>Complete guide</h1><p>What to upload to GitHub, how to open the app, how the menu and overlay work, and what you need to download.</p></div>
+<nav class="toc"><a href="#e0">How it works</a><a href="#e1">1. GitHub</a><a href="#e2">2. Build the .exe</a><a href="#e3">3. Open the app</a><a href="#e4">4. Menu &amp; overlay</a><a href="#e5">5. Your uploads</a><a href="#e6">6. FAQ</a><a href="#e7">7. Troubleshooting</a></nav>
+
+<h2 id="e0">How it works</h2>
+<p class="lead">There is no server and nothing to buy. The library lives in your GitHub repository and the app reads it from there.</p>
+<table><tr><th>What</th><th>Who needs it</th><th>Why</th></tr>
+<tr><td><b>Rematch Scripts.exe</b></td><td>everyone</td><td>the app itself (catalog, menu, overlay)</td></tr>
+<tr><td><b>Python 3.10+</b> (python.org, tick <i>Add python.exe to PATH</i>)</td><td>everyone who runs scripts</td><td>the scripts are written in Python. Installed once</td></tr>
+<tr><td>Python libraries (opencv, mss, …)</td><td>—</td><td><b>installed automatically</b> the first time a script is switched on</td></tr>
+<tr><td><a href="https://github.com/nefarius/ViGEmBus/releases" target="_blank">ViGEmBus</a> driver</td><td>only for the "Gamepad" mode</td><td>virtual gamepad. Installed once</td></tr>
+<tr><td>GitHub token</td><td>only you (the owner)</td><td>to upload scripts. Nobody else needs it</td></tr></table>
+<div class="note"><b>Only you can upload scripts</b>The "Upload" button only appears when the token belongs to the repository owner. Everyone else has no such button and cannot change your repository.</div>
+
+<h2 id="e1">1. Upload the project to GitHub <span class="tag">one time</span></h2>
+<ul class="steps">
+<li><b class="t">Create the repository</b><p>Open <a href="https://github.com/new" target="_blank">github.com/new</a>. Name <code>rematch-scripts</code>, type <b>Public</b>, click <b>Create repository</b>.</p></li>
+<li><b class="t">Upload the files</b><p>Unzip <code>rematch-scripts.zip</code>. On the repository page click <b>uploading an existing file</b>, press Ctrl+A in the project folder and drag everything into the browser (the hidden <code>.github</code> folder must be included; if you can't see it, enable "Show hidden items" in Explorer). Click <b>Commit changes</b> at the bottom. If GitHub complains about the number of files, upload in two batches.</p></li>
+<li><b class="t">Enter your username</b><p>Open <code>config.json</code> → pencil → replace <code>YOUR_GITHUB_USERNAME</code> with your username → <b>Commit changes</b>. Do the same in <code>README.md</code> (the download badge).</p></li>
+<li><b class="t">Let the automation write</b><p><b>Settings → Actions → General → Workflow permissions → Read and write permissions → Save</b>. Without it the script list won't update.</p></li>
+<li><b class="t">First run of the script index</b><p><b>Actions</b> tab → <b>Build library index</b> on the left → <b>Run workflow</b>. If it isn't there, change anything in the <code>library</code> folder (for example upload a script through the app, see section 5). The file <code>library/index.json</code> must appear.</p></li>
+<li><b class="t">Polish the page</b><p>Gear next to <b>About</b>: description and topics. <b>Settings → General → Social preview</b>: upload <code>assets/social-preview.png</code>.</p>
+<div class="warn"><b>Do not enable "Require a pull request before merging"</b>Uploads from the app write the script straight to <code>main</code>. That rule would block you too. Other people cannot change your repository anyway, they are not collaborators.</div></li>
+</ul>
+
+<h2 id="e2">2. Build the app (.exe)</h2>
+<ul class="steps">
+<li><b class="t">Start the build</b><p><b>Actions → Build Windows app → Run workflow</b>. A green check appears in 3–5 minutes.</p></li>
+<li><b class="t">Publish a release</b><p>On the repository home page, right side: <b>Releases → Create a new release</b> → in <i>Choose a tag</i> type <code>v1.0.0</code> → <b>Create new tag</b> → <b>Publish release</b>. A few minutes later two files are attached:</p>
+<table><tr><th>File</th><th>What it is</th></tr>
+<tr><td><code>Rematch Scripts Setup 1.0.0.exe</code></td><td>installer, creates a Start menu shortcut</td></tr>
+<tr><td><code>Rematch Scripts 1.0.0.exe</code></td><td>portable: runs immediately, no installation</td></tr></table></li>
+<li><b class="t">Your own icon</b><p>Replace <code>build/icon.png</code> (1024×1024) and <code>build/icon.ico</code> in the repository, then publish a new release (<code>v1.0.1</code>).</p></li>
+</ul>
+
+<h2 id="e3">3. How to open the app</h2>
+<ul class="steps">
+<li><b class="t">Download and run</b><p>Repository → <b>Releases</b> → download the <code>.exe</code> → run it. Share the same link with friends.</p>
+<div class="note"><b>Windows SmartScreen</b>The app isn't signed with a paid certificate. If Windows says "Windows protected your PC", click <b>More info → Run anyway</b>.</div></li>
+<li><b class="t">Install Python</b><p>If you don't have it: <a href="https://www.python.org/downloads/" target="_blank">python.org/downloads</a> → installer → tick <b>Add python.exe to PATH</b> → Install. The app tells you if Python is missing.</p></li>
+<li><b class="t">Language</b><p><b>Settings → Interface language</b> (Russian / English). Only the app's labels are translated; script texts stay as written by their authors.</p></li>
+</ul>
+
+<h2 id="e4">4. How the menu and overlay work</h2>
+<ul class="steps">
+<li><b class="t">Get a script</b><p><b>All scripts</b> → open one → <b>Download &amp; add to menu</b>. One button: the app downloads the files and puts the script in the menu. The library currently has <b>Rematch Ball Lock Pack</b> (ball tracking).</p></li>
+<li><b class="t">Switch it on</b><p>The <b>Script menu</b> tab: every script has a toggle. The first time, the app installs the Python libraries itself (up to a minute, status "Installing libraries…"). Then the status becomes "Running" with a green dot.</p></li>
+<li><b class="t">Configure</b><p>The gear opens the script's settings: sliders, switches, lists. Changes apply instantly (if a script needs a restart, the app does it for you). Each script can also get <b>its own on/off hotkey</b>: click the field and press the combination. "Reset settings" restores defaults.</p></li>
+<li><b class="t">Overlay on top of the game</b><p>Opens and closes with <b>F10</b> by default (change it in <b>Settings</b>). It is the same menu in a small window on the right, on top of the game: switch scripts and tweak settings without minimising the game. Close with <b>Esc</b>, the ✕ or the same key. The app must be running (it can be minimised).</p></li>
+</ul>
+<div class="warn"><b>Run the game in "Borderless" mode</b>The overlay and screen capture work when Rematch runs in <b>Borderless windowed</b> mode. In true exclusive fullscreen, windows over the game and screen capture may not work.</div>
+
+<h2 id="e5">5. How you upload new scripts <span class="tag">owner only</span></h2>
+<ul class="steps">
+<li><b class="t">One time: the token</b><p>In the app <b>Settings → Create token on GitHub</b> → <b>Generate token</b> at the bottom → copy the token (<code>ghp_…</code>) → paste it → <b>Save</b>. The <b>Upload</b> tab appears. A token is a password: never share it; it is stored encrypted.</p></li>
+<li><b class="t">Fill in the form</b><p>Title, description, instructions, photos, files (zip and anything else). Click <b>Publish</b>: the script is written straight to the repository and shows up for everyone (after about a minute, press "Refresh").</p></li>
+<li><b class="t">To get a toggle and settings in the menu</b><p>Fill in the two extra fields:</p>
+<ul><li><b>Entry file</b>: the name of the main <code>.py</code> file among the uploaded files (e.g. <code>my_script.py</code>).</li>
+<li><b>Settings (JSON)</b>: the parameters that will appear in the menu. Example:</li></ul>
+<pre><code>[
+ {"key":"speed","type":"number","label":{"ru":"Скорость","en":"Speed"},"min":1,"max":10,"step":1,"default":5},
+ {"key":"debug","type":"bool","label":{"ru":"Отладка","en":"Debug"},"default":false},
+ {"key":"mode","type":"select","label":{"ru":"Режим","en":"Mode"},"default":"a","restart":true,
+  "options":[{"value":"a","label":{"ru":"А","en":"A"}},{"value":"b","label":{"ru":"Б","en":"B"}}]}
+]</code></pre>
+<p>Types: <code>number</code> (slider), <code>bool</code> (switch), <code>select</code> (list). <code>"restart": true</code> means the script restarts when the value changes.</p>
+<p><b>How a script receives settings:</b> the app starts it with the environment variable <code>REMATCH_CONFIG</code>, a path to a JSON file like <code>{"speed":5,"debug":false}</code>. The file is rewritten on every change in the menu; a script can re-read it twice a second. Working example: <code>library/ball-lock-pack/files/balllock_core.py</code>.</p></li>
+<li><b class="t">Update a script</b><p>Just upload a new version. Users see "Update available" in the catalog, and <b>Update in menu</b> keeps their settings.</p></li>
+<li><b class="t">Delete a script</b><p>On GitHub: <code>library/</code> folder → the script's folder → three dots → <b>Delete directory</b> → Commit. The list updates by itself.</p></li>
+</ul>
+
+<h2 id="e6">6. FAQ</h2>
+<table><tr><th>Question</th><th>Answer</th></tr>
+<tr><td>Do I have to restart the game?</td><td><b>No.</b> The app runs separately from the game. Switch scripts and open the overlay at any time, no game restart needed.</td></tr>
+<tr><td>Do I need to download anything separately?</td><td>Only <b>Python</b> (once) and, for gamepad mode, the <b>ViGEmBus</b> driver. The app installs everything else itself.</td></tr>
+<tr><td>Do friends need a GitHub account?</td><td>No. Downloading the app and the scripts works without an account.</td></tr>
+<tr><td>Do scripts keep running while the app is open?</td><td>Yes. If you close the app the scripts stop. Scripts that were on start again the next time you open it.</td></tr>
+<tr><td>Could the game ban this?</td><td>The scripts read the screen image and emulate a mouse or gamepad. In online games that can break the rules and lead to a ban; use at your own risk.</td></tr></table>
+
+<h2 id="e7">7. Troubleshooting</h2>
+<table><tr><th>Problem</th><th>Fix</th></tr>
+<tr><td>"The app is not linked to a repository"</td><td>Your username isn't set in <code>config.json</code>. Fix it and publish a new release.</td></tr>
+<tr><td>"Library load failed (404)"</td><td>The repository must be Public and named as in <code>config.json</code>; <code>library/index.json</code> must exist (see step 5 of section 1).</td></tr>
+<tr><td>Status "Python required"</td><td>Install Python 3.10+ with "Add to PATH" ticked, restart the app.</td></tr>
+<tr><td>Status "Error"</td><td>Open the gear → <b>Log</b>. It shows the reason (a library failed to install, a driver is missing, etc.).</td></tr>
+<tr><td>"Gamepad" mode doesn't work</td><td>Install ViGEmBus and reboot.</td></tr>
+<tr><td>The overlay hotkey does nothing</td><td>Another program uses that key. Pick another one in Settings.</td></tr>
+<tr><td>Scripts lag</td><td>In Ball Lock settings raise "Frame downscale" (3 → 4) or lower "Rate".</td></tr>
+<tr><td>GitHub error 401/403 on upload</td><td>The token is wrong or expired. Create a new one with the <code>public_repo</code> scope.</td></tr>
+<tr><td>The .exe build fails</td><td>Actions → the red run → the log. Usually the <code>.github</code> or <code>build</code> folder wasn't uploaded.</td></tr></table>
+</div>
+
+</div>
+<footer>Rematch Scripts</footer>
+<script>
+function setLang(l){document.body.className=l;document.documentElement.lang=l;document.querySelectorAll('.lang button').forEach(b=>b.classList.toggle('on',b.dataset.set===l));try{localStorage.setItem('g',l)}catch(e){}}
+document.querySelectorAll('.lang button').forEach(b=>b.onclick=()=>setLang(b.dataset.set));
+var s='ru';try{s=localStorage.getItem('g')||((navigator.language||'').indexOf('ru')===0?'ru':'en')}catch(e){}
+setLang(s);
+</script>
+</body>
+</html>
