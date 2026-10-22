@@ -199,13 +199,33 @@ class State:
     running = True
 
 
+def foreground_title():
+    """Заголовок активного окна Windows (пустая строка, если не удалось определить)."""
+    try:
+        u = ctypes.windll.user32
+        hwnd = u.GetForegroundWindow()
+        n = u.GetWindowTextLengthW(hwnd)
+        buf = ctypes.create_unicode_buffer(n + 1)
+        u.GetWindowTextW(hwnd, buf, n + 1)
+        return buf.value
+    except Exception:
+        return None
+
+
+def is_game_focused():
+    """True, если активно окно игры Rematch (не браузер и не само приложение Rematch Scripts)."""
+    t = foreground_title()
+    if t is None:
+        return True  # не Windows или не удалось определить: не блокируем
+    t = t.lower()
+    return "rematch" in t and "scripts" not in t and "github" not in t
+
+
 def run(output, gains, title, config_path=None):
     tune_system()
     st = State()
     managed = bool(config_path)   # запущен из меню Rematch Scripts: настройки берутся из файла
     base_gains = dict(gains)
-    if managed:
-        st.locked = True
 
     def toggle_lock():
         st.locked = not st.locked
@@ -223,7 +243,7 @@ def run(output, gains, title, config_path=None):
     print("=" * 60)
     print(title)
     if managed:
-        print("  Управление и настройки: меню Rematch Scripts")
+        print("  Настройки: меню Rematch Scripts. Наведение включается клавишей из настроек (по умолчанию F6)")
     else:
         print("  [F6] ВКЛ/ВЫКЛ лок на мяче | [F7] калибровка цвета | [F8] выход")
     print("=" * 60)
@@ -239,6 +259,7 @@ def run(output, gains, title, config_path=None):
     upper = np.array(CFG["upper"], dtype=np.uint8)
 
     cfg_state = {"mtime": 0.0, "checked": 0.0}
+    focus_state = {"t": 0.0, "ok": False}
 
     def reload_cfg():
         """Читает настройки из меню (раз в 0.4 с, только если файл изменился)."""
@@ -253,6 +274,22 @@ def run(output, gains, title, config_path=None):
         except Exception:
             return
         g = lambda k, d: v.get(k, d)
+        if not cfg_state.get("first"):
+            cfg_state["first"] = True
+            st.locked = bool(g("start_locked", False))
+        cfg_state["only"] = bool(g("only_in_game", True))
+        key = str(g("lock_key", "f6")).lower()
+        if key != cfg_state.get("key"):
+            try:
+                if cfg_state.get("hk") is not None:
+                    keyboard.remove_hotkey(cfg_state["hk"])
+            except Exception:
+                pass
+            try:
+                cfg_state["hk"] = keyboard.add_hotkey(key, toggle_lock)
+            except Exception:
+                cfg_state["hk"] = None
+            cfg_state["key"] = key
         CFG["smooth"] = float(g("smooth", CFG["smooth"]))
         CFG["target_fps"] = int(g("fps", CFG["target_fps"]))
         period = 1.0 / max(10, CFG["target_fps"])
@@ -290,6 +327,14 @@ def run(output, gains, title, config_path=None):
             if managed and now - cfg_state["checked"] > 0.4:
                 cfg_state["checked"] = now
                 reload_cfg()
+            if managed and now - focus_state["t"] > 0.3:
+                focus_state["t"] = now
+                ok = is_game_focused() if cfg_state.get("only", True) else True
+                if ok != focus_state["ok"]:
+                    focus_state["ok"] = ok
+                    if not ok:
+                        output.stop()
+            active = st.locked and (focus_state["ok"] if managed else True)
             dt = max(now - last_t, 1e-4)
             last_t = now
             dt60 = min(dt * 60.0, 3.0)
@@ -330,7 +375,7 @@ def run(output, gains, title, config_path=None):
                 ex, ey = sx - center_x, sy - center_y
                 dist = math.hypot(ex, ey)
 
-                if st.locked:
+                if active:
                     if dist > gains["deadzone"]:
                         ratio = min(dist / (max_dist * 0.6), 1.0)
                         kp = gains["kp"] + gains["edge"] * ratio * ratio
@@ -350,7 +395,7 @@ def run(output, gains, title, config_path=None):
                         last_cx = last_cy = 0.0
                 prev_ex, prev_ey = ex, ey
             else:
-                if st.locked and lost < CFG["memory_frames"]:
+                if active and lost < CFG["memory_frames"]:
                     lost += 1
                     last_cx *= CFG["decay"]
                     last_cy *= CFG["decay"]
