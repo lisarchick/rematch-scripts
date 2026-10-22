@@ -1,0 +1,56 @@
+{
+  "minimap": {
+    "left": 1517,
+    "top": 677,
+    "width": 352,
+    "height": 352
+  },
+  "monitor_index": 0,
+  "capture": "auto",
+  "overlay_geometry": "620x80+650+180",
+  "debug": true,
+  "goal_left_x": 155.5,
+  "goal_right_x": 197.5,
+  "goal_y": 177.0,
+  "wall_left_x": 49.0,
+  "wall_right_x": 300.0,
+  "goal_margin": 4.0,
+  "center_band": 6.0,
+  "ring_hsv_lower": [
+    21,
+    190,
+    190
+  ],
+  "ring_hsv_upper": [
+    27,
+    255,
+    255
+  ],
+  "marker_hsv_lower": [
+    28,
+    190,
+    190
+  ],
+  "marker_hsv_upper": [
+    34,
+    255,
+    255
+  ],
+  "ring_size_min": 20,
+  "ring_size_max": 38,
+  "marker_min_pixels": 120,
+  "track_window": 0.4,
+  "track_gap": 0.3,
+  "max_jump_px": 70,
+  "min_samples": 3,
+  "min_speed": 25.0,
+  "max_eta": 2.5,
+  "marker_min_dist": 18.0,
+  "vote_window": 5,
+  "vote_need": 3,
+  "hold_sec": 1.5,
+  "key_backend": 118,
+  "key_snapshot": 119,
+  "key_debug": 120,
+  "key_exit": 121
+}

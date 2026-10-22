@@ -132,8 +132,10 @@ $('#save-token').onclick = async () => {
   cfg.hasToken = ok; $('#token-msg').textContent = ok ? t('tok_saved') : t('tok_removed'); await checkOwner();
 };
 $('#make-token').onclick = () => api.openExternal('https://github.com/settings/tokens/new?scopes=public_repo&description=Rematch%20Scripts');
+const syncLangBtns = () => document.querySelectorAll('#langsw button').forEach(b => b.classList.toggle('on', b.dataset.l === lang));
+document.querySelectorAll('#langsw button').forEach(b => b.onclick = () => { $('#lang').value = b.dataset.l; $('#lang').onchange(); });
 $('#lang').onchange = () => {
-  setLang($('#lang').value); repoInfo(); render(); menuCtl.reload();
+  setLang($('#lang').value); syncLangBtns(); repoInfo(); render(); menuCtl.reload();
   if (!$('#view-detail').classList.contains('hidden') && currentId) openDetail(currentId);
 };
 $('#ov-key').addEventListener('keydown', async (e) => {
@@ -153,7 +155,7 @@ $('#ov-key').addEventListener('keydown', async (e) => {
 (async () => {
   cfg = await api.config();
   $('#lang').value = lang;
-  applyLang();
+  applyLang(); syncLangBtns();
   menuCtl = mountMenu($('#menu'));
   $('#ov-key').value = await api.getOverlayHotkey();
   repoInfo(); load(); checkOwner();

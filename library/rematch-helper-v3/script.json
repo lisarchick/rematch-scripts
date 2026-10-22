@@ -1,0 +1,438 @@
+{
+  "title": "Rematch Helper v3 (most accurate)",
+  "author": "rematch-scripts",
+  "version": 1,
+  "description": "The most accurate version. Reads the ball on the minimap and shows where the shot is going: LEFT, CENTER, RIGHT or MISS. Waits for several frames to agree before showing a verdict, so it is more reliable but reacts a little later than v4.",
+  "instructions": "**How to use**\n1. Press **Download & add to menu**.\n2. In **Script menu** switch the script on (the first start installs the Python libraries; Python 3.10+ is required).\n3. Run the game in **Borderless / windowed** mode. The text appears on top of the game automatically.\n4. If nothing is detected, open the gear, switch **Debug window** on and adjust **Minimap** position and size so the window shows only the minimap. The defaults are for 1920x1080.\n5. Changes to these settings restart the script automatically.\n\nThe script only reads the screen image and draws text on top. It does not touch the game's memory.",
+  "entry": "rematch_helper_v3.py",
+  "settings": [
+    {
+      "key": "capture",
+      "type": "select",
+      "label": "Capture method",
+      "default": "auto",
+      "restart": true,
+      "options": [
+        {
+          "value": "auto",
+          "label": "Auto (dxcam, then mss)"
+        },
+        {
+          "value": "dxcam",
+          "label": "dxcam (fast)"
+        },
+        {
+          "value": "mss",
+          "label": "mss (compatible)"
+        }
+      ]
+    },
+    {
+      "key": "verdict_lang",
+      "type": "select",
+      "label": "Text language",
+      "default": "en",
+      "restart": true,
+      "options": [
+        {
+          "value": "en",
+          "label": "English (LEFT / RIGHT)"
+        },
+        {
+          "value": "ru",
+          "label": "Russian (ВЛЕВО / ВПРАВО)"
+        }
+      ]
+    },
+    {
+      "key": "text_color",
+      "type": "select",
+      "label": "Text colour",
+      "default": "#ff2d2d",
+      "restart": true,
+      "options": [
+        {
+          "value": "#ff2d2d",
+          "label": "Red"
+        },
+        {
+          "value": "#ffffff",
+          "label": "White"
+        },
+        {
+          "value": "#ffd400",
+          "label": "Yellow"
+        },
+        {
+          "value": "#2dff6a",
+          "label": "Green"
+        },
+        {
+          "value": "#2dd4ff",
+          "label": "Cyan"
+        }
+      ]
+    },
+    {
+      "key": "font_size",
+      "type": "number",
+      "label": "Text size",
+      "min": 14,
+      "max": 80,
+      "step": 1,
+      "default": 30,
+      "restart": true
+    },
+    {
+      "key": "text_x",
+      "type": "number",
+      "label": "Text position X",
+      "min": 0,
+      "max": 3840,
+      "step": 10,
+      "default": 650,
+      "restart": true
+    },
+    {
+      "key": "text_y",
+      "type": "number",
+      "label": "Text position Y",
+      "min": 0,
+      "max": 2160,
+      "step": 10,
+      "default": 180,
+      "restart": true
+    },
+    {
+      "key": "hold_sec",
+      "type": "number",
+      "label": "Keep text for (sec)",
+      "min": 0.5,
+      "max": 4,
+      "step": 0.1,
+      "default": 1.5,
+      "restart": true
+    },
+    {
+      "key": "only_in_game",
+      "type": "bool",
+      "label": "Only work in the game window",
+      "default": false,
+      "restart": true
+    },
+    {
+      "key": "debug",
+      "type": "bool",
+      "label": "Debug window",
+      "default": false,
+      "restart": true
+    },
+    {
+      "key": "monitor_index",
+      "type": "number",
+      "label": "Monitor number (0 = first)",
+      "min": 0,
+      "max": 3,
+      "step": 1,
+      "default": 0,
+      "restart": true
+    },
+    {
+      "key": "mm_left",
+      "type": "number",
+      "label": "Minimap: left (px)",
+      "min": 0,
+      "max": 3840,
+      "step": 1,
+      "default": 1517,
+      "restart": true,
+      "group": "minimap"
+    },
+    {
+      "key": "mm_top",
+      "type": "number",
+      "label": "Minimap: top (px)",
+      "min": 0,
+      "max": 2160,
+      "step": 1,
+      "default": 677,
+      "restart": true,
+      "group": "minimap"
+    },
+    {
+      "key": "mm_width",
+      "type": "number",
+      "label": "Minimap: width (px)",
+      "min": 100,
+      "max": 800,
+      "step": 1,
+      "default": 352,
+      "restart": true,
+      "group": "minimap"
+    },
+    {
+      "key": "mm_height",
+      "type": "number",
+      "label": "Minimap: height (px)",
+      "min": 100,
+      "max": 800,
+      "step": 1,
+      "default": 352,
+      "restart": true,
+      "group": "minimap"
+    },
+    {
+      "key": "goal_left_x",
+      "type": "number",
+      "label": "Goal: left edge",
+      "min": 0,
+      "max": 400,
+      "step": 0.5,
+      "default": 155.5,
+      "restart": true,
+      "group": "goal"
+    },
+    {
+      "key": "goal_right_x",
+      "type": "number",
+      "label": "Goal: right edge",
+      "min": 0,
+      "max": 400,
+      "step": 0.5,
+      "default": 197.5,
+      "restart": true,
+      "group": "goal"
+    },
+    {
+      "key": "goal_y",
+      "type": "number",
+      "label": "Goal: line Y",
+      "min": 0,
+      "max": 400,
+      "step": 0.5,
+      "default": 177,
+      "restart": true,
+      "group": "goal"
+    },
+    {
+      "key": "wall_left_x",
+      "type": "number",
+      "label": "Left wall X",
+      "min": 0,
+      "max": 400,
+      "step": 0.5,
+      "default": 49,
+      "restart": true,
+      "group": "goal"
+    },
+    {
+      "key": "wall_right_x",
+      "type": "number",
+      "label": "Right wall X",
+      "min": 0,
+      "max": 400,
+      "step": 0.5,
+      "default": 300,
+      "restart": true,
+      "group": "goal"
+    },
+    {
+      "key": "goal_margin",
+      "type": "number",
+      "label": "Goal tolerance",
+      "min": 0,
+      "max": 20,
+      "step": 0.5,
+      "default": 4,
+      "restart": true,
+      "group": "goal"
+    },
+    {
+      "key": "center_band",
+      "type": "number",
+      "label": "Centre band",
+      "min": 0,
+      "max": 30,
+      "step": 0.5,
+      "default": 6,
+      "restart": true,
+      "group": "goal"
+    },
+    {
+      "key": "vote_window",
+      "type": "number",
+      "label": "Smoothing: frames window",
+      "min": 1,
+      "max": 10,
+      "step": 1,
+      "default": 5,
+      "restart": true,
+      "group": "detect"
+    },
+    {
+      "key": "vote_need",
+      "type": "number",
+      "label": "Smoothing: frames that must agree",
+      "min": 1,
+      "max": 10,
+      "step": 1,
+      "default": 3,
+      "restart": true,
+      "group": "detect"
+    },
+    {
+      "key": "min_speed",
+      "type": "number",
+      "label": "Minimum ball speed",
+      "min": 5,
+      "max": 200,
+      "step": 1,
+      "default": 25,
+      "restart": true,
+      "group": "detect"
+    },
+    {
+      "key": "max_eta",
+      "type": "number",
+      "label": "Max time to goal (sec)",
+      "min": 0.5,
+      "max": 6,
+      "step": 0.1,
+      "default": 2.5,
+      "restart": true,
+      "group": "detect"
+    },
+    {
+      "key": "ring_h_min",
+      "type": "number",
+      "label": "Ball ring: H min",
+      "min": 0,
+      "max": 179,
+      "step": 1,
+      "default": 21,
+      "restart": true,
+      "group": "ring_color"
+    },
+    {
+      "key": "ring_h_max",
+      "type": "number",
+      "label": "Ball ring: H max",
+      "min": 0,
+      "max": 179,
+      "step": 1,
+      "default": 27,
+      "restart": true,
+      "group": "ring_color"
+    },
+    {
+      "key": "ring_s_min",
+      "type": "number",
+      "label": "Ball ring: S min",
+      "min": 0,
+      "max": 255,
+      "step": 1,
+      "default": 190,
+      "restart": true,
+      "group": "ring_color"
+    },
+    {
+      "key": "ring_s_max",
+      "type": "number",
+      "label": "Ball ring: S max",
+      "min": 0,
+      "max": 255,
+      "step": 1,
+      "default": 255,
+      "restart": true,
+      "group": "ring_color"
+    },
+    {
+      "key": "ring_v_min",
+      "type": "number",
+      "label": "Ball ring: V min",
+      "min": 0,
+      "max": 255,
+      "step": 1,
+      "default": 190,
+      "restart": true,
+      "group": "ring_color"
+    },
+    {
+      "key": "ring_v_max",
+      "type": "number",
+      "label": "Ball ring: V max",
+      "min": 0,
+      "max": 255,
+      "step": 1,
+      "default": 255,
+      "restart": true,
+      "group": "ring_color"
+    },
+    {
+      "key": "marker_h_min",
+      "type": "number",
+      "label": "Dashed circle: H min",
+      "min": 0,
+      "max": 179,
+      "step": 1,
+      "default": 28,
+      "restart": true,
+      "group": "marker_color"
+    },
+    {
+      "key": "marker_h_max",
+      "type": "number",
+      "label": "Dashed circle: H max",
+      "min": 0,
+      "max": 179,
+      "step": 1,
+      "default": 34,
+      "restart": true,
+      "group": "marker_color"
+    },
+    {
+      "key": "marker_s_min",
+      "type": "number",
+      "label": "Dashed circle: S min",
+      "min": 0,
+      "max": 255,
+      "step": 1,
+      "default": 190,
+      "restart": true,
+      "group": "marker_color"
+    },
+    {
+      "key": "marker_s_max",
+      "type": "number",
+      "label": "Dashed circle: S max",
+      "min": 0,
+      "max": 255,
+      "step": 1,
+      "default": 255,
+      "restart": true,
+      "group": "marker_color"
+    },
+    {
+      "key": "marker_v_min",
+      "type": "number",
+      "label": "Dashed circle: V min",
+      "min": 0,
+      "max": 255,
+      "step": 1,
+      "default": 190,
+      "restart": true,
+      "group": "marker_color"
+    },
+    {
+      "key": "marker_v_max",
+      "type": "number",
+      "label": "Dashed circle: V max",
+      "min": 0,
+      "max": 255,
+      "step": 1,
+      "default": 255,
+      "restart": true,
+      "group": "marker_color"
+    }
+  ]
+}

@@ -1,0 +1,157 @@
+{
+  "title": "Rematch Minimap Zoom",
+  "author": "rematch-scripts",
+  "version": 1,
+  "description": "Draws a magnified copy of the minimap on top of the game. Zoom and focus point can be changed live from the menu, or with the ] and [ keys in game.",
+  "instructions": "**How to use**\n1. Press **Download & add to menu**.\n2. In **Script menu** switch the script on (the first start installs the Python libraries; Python 3.10+ is required).\n3. Set **Region: left / top / width / height** so the box covers exactly the minimap on your screen (defaults are for 1920x1080). Region changes restart the script.\n4. Change **Zoom** and **Focus point** with the sliders. They apply instantly.\n5. In the game: **]** zooms in, **[** zooms out, and the **show/hide key** from the settings hides the overlay.\n6. Gamepad: hold **Back/View** and press D-pad Up (zoom in), Down (zoom out) or Left (show/hide).\n\nThe game must run in **Borderless / windowed** mode. The script only reads the screen image.",
+  "entry": "rematch_minimap_zoom.py",
+  "settings": [
+    {
+      "key": "rg_left",
+      "type": "number",
+      "label": "Region: left (px)",
+      "min": 0,
+      "max": 3840,
+      "step": 1,
+      "default": 1517,
+      "restart": true,
+      "group": "region"
+    },
+    {
+      "key": "rg_top",
+      "type": "number",
+      "label": "Region: top (px)",
+      "min": 0,
+      "max": 2160,
+      "step": 1,
+      "default": 677,
+      "restart": true,
+      "group": "region"
+    },
+    {
+      "key": "rg_width",
+      "type": "number",
+      "label": "Region: width (px)",
+      "min": 50,
+      "max": 1200,
+      "step": 1,
+      "default": 352,
+      "restart": true,
+      "group": "region"
+    },
+    {
+      "key": "rg_height",
+      "type": "number",
+      "label": "Region: height (px)",
+      "min": 50,
+      "max": 1200,
+      "step": 1,
+      "default": 352,
+      "restart": true,
+      "group": "region"
+    },
+    {
+      "key": "zoom",
+      "type": "number",
+      "label": "Zoom",
+      "min": 1,
+      "max": 4,
+      "step": 0.05,
+      "default": 1.5,
+      "restart": false
+    },
+    {
+      "key": "focus_x",
+      "type": "number",
+      "label": "Focus point: horizontal (0 left - 1 right)",
+      "min": 0,
+      "max": 1,
+      "step": 0.05,
+      "default": 0.5,
+      "restart": false
+    },
+    {
+      "key": "focus_y",
+      "type": "number",
+      "label": "Focus point: vertical (0 top - 1 bottom)",
+      "min": 0,
+      "max": 1,
+      "step": 0.05,
+      "default": 0.5,
+      "restart": false
+    },
+    {
+      "key": "zoom_step",
+      "type": "number",
+      "label": "Zoom step for the ] and [ keys",
+      "min": 0.05,
+      "max": 1,
+      "step": 0.05,
+      "default": 0.25,
+      "restart": false
+    },
+    {
+      "key": "fps",
+      "type": "number",
+      "label": "Refresh rate (FPS)",
+      "min": 10,
+      "max": 60,
+      "step": 5,
+      "default": 30,
+      "restart": false
+    },
+    {
+      "key": "show",
+      "type": "bool",
+      "label": "Show overlay",
+      "default": true
+    },
+    {
+      "key": "key_toggle",
+      "type": "select",
+      "label": "Show/hide key",
+      "default": "f8",
+      "restart": true,
+      "options": [
+        {
+          "value": "f5",
+          "label": "F5"
+        },
+        {
+          "value": "f6",
+          "label": "F6"
+        },
+        {
+          "value": "f7",
+          "label": "F7"
+        },
+        {
+          "value": "f8",
+          "label": "F8"
+        },
+        {
+          "value": "f9",
+          "label": "F9"
+        },
+        {
+          "value": "insert",
+          "label": "INSERT"
+        },
+        {
+          "value": "home",
+          "label": "HOME"
+        },
+        {
+          "value": "end",
+          "label": "END"
+        }
+      ]
+    },
+    {
+      "key": "pad_enabled",
+      "type": "bool",
+      "label": "Gamepad shortcuts (Back + D-pad)",
+      "default": true
+    }
+  ]
+}

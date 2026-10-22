@@ -99,3 +99,7 @@ body.overlay{flex-direction:column;background:#0f1117;border:1px solid var(--acc
 .ov-head small{font-size:11px}
 .xbtn{padding:2px 9px}
 .ov-body{flex:1;overflow:auto;padding:12px 14px;margin:0}
+
+.langsw{display:flex;gap:4px;margin:0 0 10px;background:var(--card);border-radius:8px;padding:3px}
+.langsw button{flex:1;background:none;border:0;color:var(--muted);padding:6px 0;border-radius:6px;cursor:pointer;font:inherit;font-weight:600}
+.langsw button.on{background:var(--accent);color:#fff}
